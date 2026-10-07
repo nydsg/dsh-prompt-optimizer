@@ -1,0 +1,60 @@
+{
+  "name": "dsh-prompt-optimizer",
+  "version": "0.1.0",
+  "description": "在输入框工具条注入「优化提示词」按钮：读取当前草稿，按九段骨架（角色/目标/背景/任务/要求/约束/步骤/输出格式/验收标准）重写为结构完整、可直接执行的提示词，并输出「优化后的提示词 / 主要优化点 / 使用建议」三段。支持替换原文、追加、复制、撤销与原文对比。双引擎：优先用默认模型，失败自动回落本地规则引擎（离线可用、绝不编造事实）。代码、变量、URL、公式逐字保留；中英文同语言输出。Adds an \"Optimize prompt\" button to the composer: rewrites the draft into a nine-section, directly executable prompt with a changes list and usage advice; model-first with an offline rule-engine fallback.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "prompt",
+    "prompt-engineering",
+    "prompt-optimizer",
+    "提示词",
+    "提示词优化"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "prompt",
+    "locale",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "node build/build-client.mjs",
+    "test": "node --test test/rules.test.mjs test/client.test.mjs test/host.test.mjs",
+    "prepack": "node build/build-client.mjs && node --test test/rules.test.mjs test/client.test.mjs test/host.test.mjs",
+    "verify:patch": "node build/verify-install.mjs",
+    "profile:check": "node build/check-profile.mjs",
+    "profile:on": "node build/install-profile.mjs",
+    "profile:off": "node build/uninstall-profile.mjs",
+    "iso:verify": "node build/iso-verify.mjs",
+    "iso:repro": "node build/iso-repro-market.mjs",
+    "market:compat": "node build/market-compat.mjs",
+    "iso:market": "node build/iso-market-roundtrip.mjs",
+    "profile:install-only": "node build/install-only.mjs",
+    "market:sees": "node build/market-sees.mjs",
+    "iso:combo": "node build/iso-combo-verify.mjs",
+    "verify:installed": "node build/verify-installed-bundle.mjs",
+    "render:test": "node build/render-test.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "sideEffects": false
+}
